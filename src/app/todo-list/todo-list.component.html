@@ -1,0 +1,31 @@
+<h1>Todo List</h1>
+
+<form (submit)="addTodo()">
+  <input
+    name="Text"
+    [(ngModel)]="text"
+    placeholder="Eg: Write some code"
+    type="text"
+  />
+  <input name="Button" type="submit" value="Add Todo" />
+</form>
+
+<ul class="todo-list">
+  <li
+    *ngFor="let todo of todoItems"
+    class="todo-list-item"
+    [class.completed]="todo.completed"
+  >
+    <div>
+      {{ todo.text }}
+    </div>
+    <div>
+      <button (click)="deleteTodo(todo.id)">
+        <i class="fa fa-trash-o"></i>
+      </button>
+      <button (click)="markComplete(todo.id)">
+        <i class="fa fa-check"></i>
+      </button>
+    </div>
+  </li>
+</ul>
