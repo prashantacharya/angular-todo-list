@@ -1,38 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TodosService } from './todos.service';
+
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css'],
 })
 export class TodoListComponent implements OnInit {
-  todoItems = [
-    { id: 1, completed: false, text: 'Eat' },
-    { id: 2, completed: true, text: 'Sleep' },
-    { id: 3, completed: false, text: 'Code' },
-  ];
+  todoItems;
+  text = '';
 
-  text: string;
-  constructor() {}
+  constructor(private todoService: TodosService) {}
 
   addTodo(): void {
-    this.todoItems.push({ id: Date.now(), completed: false, text: this.text });
-    this.text = '';
-  }
+    if (this.text) {
+      this.todoService.addTodo(this.text);
+      this.text = '';
 
-  markComplete(id): void {
-    this.todoItems = this.todoItems.map((item) => {
-      if (item.id === id) {
-        return { ...item, completed: !item.completed };
-      } else {
-        return item;
-      }
-    });
+      this.todoItems = this.todoService.getTodos();
+    }
   }
 
   deleteTodo(id): void {
-    this.todoItems = this.todoItems.filter((item) => item.id !== id);
+    this.todoService.deleteTodo(id);
+    this.todoItems = this.todoService.getTodos();
   }
 
-  ngOnInit(): void {}
+  markComplete(id): void {
+    this.todoService.markComplete(id);
+    this.todoItems = this.todoService.getTodos();
+  }
+
+  ngOnInit(): void {
+    this.todoItems = this.todoService.getTodos();
+  }
 }

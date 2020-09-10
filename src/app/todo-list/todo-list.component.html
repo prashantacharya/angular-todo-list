@@ -1,9 +1,9 @@
 <h1>Todo List</h1>
 
-<form (submit)="addTodo()">
+<form (submit)="this.addTodo()">
   <input
     name="Text"
-    [(ngModel)]="text"
+    [(ngModel)]="this.text"
     placeholder="Eg: Write some code"
     type="text"
   />
@@ -12,7 +12,7 @@
 
 <ul class="todo-list">
   <li
-    *ngFor="let todo of todoItems"
+    *ngFor="let todo of this.todoItems"
     class="todo-list-item"
     [class.completed]="todo.completed"
   >
@@ -23,7 +23,7 @@
       <button (click)="deleteTodo(todo.id)">
         <i class="fa fa-trash-o"></i>
       </button>
-      <button (click)="markComplete(todo.id)">
+      <button (click)="this.markComplete(todo.id)">
         <i class="fa fa-check"></i>
       </button>
     </div>
